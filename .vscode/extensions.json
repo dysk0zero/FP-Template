@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    // --- Python ---
+    "ms-python.python",
+    "ms-python.black-formatter",
+    "charliermarsh.ruff",
+    "ms-python.mypy-type-checker",
+
+    // --- LaTeX ---
+    "james-yu.latex-workshop",     // PDF preview & build
+    "valentjn.vscode-ltex",        // Optional: grammar/spell checker for scientific writing
+
+    // --- General Formatting ---
+    "esbenp.prettier-vscode",      // Prettier for Markdown, JSON, YAML, etc.
+
+    // --- Configuration / Docs ---
+    "tamasfe.even-better-toml",
+    "redhat.vscode-yaml",
+    "yzhang.markdown-all-in-one"
+  ]
+}

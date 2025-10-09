@@ -1,0 +1,48 @@
+{
+  // --- Python ---
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  // --- Ruff ---
+  "ruff.enable": true,
+  "ruff.lintOnSave": true,
+
+  // --- LaTeX Workshop ---
+  "latex-workshop.latex.outDir": "build",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (pdf)",
+      "tools": ["latexmk"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-output-directory=build",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.message.update.show": false,
+
+  // --- Editor ---
+  "files.exclude": {
+    "build": true,
+    "__pycache__": true,
+    "*.aux": true,
+    "*.log": true,
+    "*.out": true,
+    "*.synctex.gz": true
+  }
+}
