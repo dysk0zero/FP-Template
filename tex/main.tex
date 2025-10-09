@@ -1,0 +1,96 @@
+\documentclass[a4paper,12pt]{article}
+
+% ---------- Encoding & language (pdflatex) ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% ---------- Fonts & typography ----------
+\usepackage{lmodern}
+\usepackage{microtype}        % better spacing/kerning
+
+% ---------- Math & symbols ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}          % units & numbers, replaces gensymb
+\sisetup{
+  detect-all,
+  per-mode=symbol,            % e.g. m/s
+  separate-uncertainty=true
+}
+
+% ---------- Figures, tables ----------
+\usepackage{graphicx}
+\usepackage{booktabs}         % nice tables
+\usepackage{float}            % optional: [H] placement when you really need it
+
+% ---------- Links & references ----------
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+% ---------- Layout ----------
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---------- Bibliography (BibLaTeX + biber) ----------
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- Title info (placeholders) ----------
+\title{<Project Title>}
+\author{
+  <Author One> \and <Author Two> \and <Author Three>
+}
+\date{\today}
+
+\begin{document}
+
+% ---------- Title page (simple, customizable) ----------
+\begin{titlepage}
+  \centering
+  {\huge\bfseries \thetitle\par}
+  \vspace{1.5cm}
+  {\Large <Course / Lab / Organization>\par}
+  \vspace{1cm}
+  {\large \theauthor\par}
+  \vspace{0.5cm}
+  {\large <emails or IDs here>\par}
+  \vfill
+  {\large <Supervisor / Tutor: Name>\par}
+  \vspace{0.5cm}
+  {\large \thedate\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ---------- Sections (placeholders) ----------
+\begin{abstract}
+<Brief summary (3–6 sentences).>
+\end{abstract}
+
+\section{Introduction}
+<Context, goals, related work \cite{key-example}.>
+
+\section{Methods}
+<Experimental setup / algorithms / datasets.>
+
+\section{Results}
+<Main quantitative/qualitative results.>
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/example.png}
+  \caption{<Descriptive caption.>}
+  \label{fig:example}
+\end{figure}
+
+\section{Discussion}
+<Interpret findings, limitations, implications.>
+
+\section{Conclusion}
+<What you did, what it means, and future work.>
+
+% ---------- References ----------
+\printbibliography
+
+\end{document}
