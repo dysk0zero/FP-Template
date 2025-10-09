@@ -7,11 +7,11 @@
     "ms-python.mypy-type-checker",
 
     // --- LaTeX ---
-    "james-yu.latex-workshop",     // PDF preview & build
-    "valentjn.vscode-ltex",        // Optional: grammar/spell checker for scientific writing
+    "james-yu.latex-workshop",
+    "valentjn.vscode-ltex",
 
     // --- General Formatting ---
-    "esbenp.prettier-vscode",      // Prettier for Markdown, JSON, YAML, etc.
+    "esbenp.prettier-vscode",
 
     // --- Configuration / Docs ---
     "tamasfe.even-better-toml",
