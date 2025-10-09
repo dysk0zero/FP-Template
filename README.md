@@ -34,7 +34,13 @@ uv sync
 ```powershell
 irm https://astral.sh/uv/install.ps1 | iex
 uv sync
+
+irm https://astral.sh/uv/install.ps1 -OutFile install.ps1
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+
 ```
+
+
 
 ---
 
