@@ -4,6 +4,45 @@ Template for **Cem & Javi**: LaTeX docs, Python tooling, and an AI chat CLI (Dee
 
 ---
 
+## Create and Activate a Virtual Environment
+
+You must work inside a local virtual environment (`.venv`). Do **not** use system Python.
+
+### Fedora / Linux
+
+```bash
+# Create venv in project root
+python3 -m venv .venv
+
+# Activate it
+source .venv/bin/activate
+
+# Verify you're inside the venv
+which python
+# → .../yourproject/.venv/bin/python
+```
+
+### Windows (PowerShell)
+
+```powershell
+# Create venv in project root
+python -m venv .venv
+
+# Activate it
+. .\.venv\Scripts\Activate.ps1
+
+# Verify you're inside the venv
+Get-Command python
+# → ...\yourproject\.venv\Scripts\python.exe
+
+# If activation is blocked, run once in this shell:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+> After activation the prompt starts with `(.venv)`. Run `deactivate` to exit.
+
+---
+
 ## TL;DR
 
 ### Linux / macOS
@@ -47,14 +86,17 @@ deepseek-chat "Sanity check"
 ## Build the PDF
 
 ### Option A — VS Code
-1. Open `tex/main.tex` in VS Code.  
-2. Press **Ctrl + Alt + B** (or **Cmd + Alt + B** on macOS) to build the project.  
+
+1. Open `tex/main.tex` in VS Code.
+2. Press **Ctrl + Alt + B** (or **Cmd + Alt + B** on macOS) to build the project.
 3. The compiled PDF will appear in `build/main.pdf`.
 
 ### Option B — Terminal
+
 You can also use the provided Makefile:
 
 **Linux / macOS**
+
 ```bash
 make pdf      # build once
 make watch    # auto-rebuild on save
