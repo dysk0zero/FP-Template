@@ -1,179 +1,100 @@
 # FP Template
 
-Template repo for **Cem & Javi** — LaTeX, Python scripting, and AI chat (DeepSeek or ChatGPT via OpenAI SDK).
+Template for **Cem & Javi**: LaTeX docs, Python tooling, and an AI chat CLI (DeepSeek or ChatGPT via OpenAI).
 
 ---
 
-## TLDR — Quick Start
-
-1. Install **uv** and run `uv sync`.
-2. Install LaTeX 
-3. Copy `.env.example` → `.env`.
-4. Fill **either** DeepSeek **or** OpenAI keys.
-5. Activate venv.
-6. Test:
-
-   ```bash
-   deepseek-chat "Sanity check: 1-2 lines."
-   ```
-
----
-
-## Install Python "uv"
-If you want to find out more about uv check this: https://github.com/astral-sh/uv
+## TL;DR
 
 ### Linux / macOS
 
 ```bash
+# 1) Install uv + deps and create venv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync
+
+# 2) Install LaTeX dependencies (Fedora example)
+sudo dnf install -y texlive-scheme-medium latexmk biber texlive-cleveref
+
+# 3) Configure secrets
+cp .env.example .env   # fill with either DeepSeek or OpenAI keys
+
+# 4) Activate & test CLI
+source .venv/bin/activate
+deepseek-chat "Sanity check"
 ```
 
-### Windows PowerShell
+### Windows
 
 ```powershell
+# 1) Install uv + deps and create venv
 irm https://astral.sh/uv/install.ps1 | iex
 uv sync
 
-irm https://astral.sh/uv/install.ps1 -OutFile install.ps1
-powershell -ExecutionPolicy Bypass -File .\install.ps1
+# 2) Install LaTeX dependencies (MiKTeX recommended)
+# Download from https://miktex.org/download and allow it to install missing packages automatically.
 
-```
+# 3) Configure secrets
+Copy-Item .env.example .env   # fill with either DeepSeek or OpenAI keys
 
-
-
----
-
-## Installing LaTeX
-
-We use `latexmk` (as configured in VS Code). LaTeX is a **system install**, not a Python package.
-
-## Linux (Debian/Ubuntu)
-
-```sh
-sudo apt-get update
-sudo apt-get install -y texlive-latex-extra latexmk biber
-# Optional: everything (large download)
-# sudo apt-get install texlive-full
-```
-
-## macOS
-
-**Option A (full):** Install MacTeX (GUI) from tug.org.
-**Option B (minimal via Homebrew):**
-
-```sh
-brew install --cask basictex
-sudo tlmgr update --self
-sudo tlmgr install latexmk biber
+# 4) Activate & test CLI
+. .\.venv\Scripts\Activate.ps1
+deepseek-chat "Sanity check"
 ```
 
 ---
 
-## Windows — Fast MiKTeX Setup
+## Build the PDF
 
-### 1 Download & Install
-
-1. Visit [miktex.org/download](https://miktex.org/download).
-2. Download **`basic-miktex-x64.exe`**.
-3. Run the installer with these settings:
-
-   * **Install for:** *Only for me* (faster, no admin rights needed)
-   * **Preferred paper size:** *A4* (or *Letter*)
-   * **Install missing packages on-the-fly:** ✅ *Yes*
-   * **Update MiKTeX automatically:** optional, leave enabled if you want
-
-### Minimal Setup Tips
-
-**Do not install** the following extras — they slow down installation and aren’t needed for VS Code builds:
-
-| ❌ Skip                                              |
-| --------------------------------------------------- |
-| **Complete / Full installation**                    |
-| **MiKTeX Console (Admin)**                          |
-| **Ghostscript, Perl, GSView, SumatraPDF, Texworks** |
-| **Extra fonts / documentation packages**            |
-| **Non-Latin language collections**                  |
-
-### Verify Installation
-
-After installation, open **PowerShell** and check:
-
-```powershell
-latexmk -v
-pdflatex --version
-```
-
-If either command isn’t found, restart your terminal or VS Code and ensure MiKTeX’s `bin` directory is in your system **PATH**.
-
----
-
-## How to compile
-
-> Prereq: A working LaTeX distribution with **latexmk** and **biber** available on your `PATH`.
-
-### Option A — VS Code (LaTeX Workshop)
-
-1. Open `main.tex`.
-2. Run **“Build LaTeX project”** (click the ▶️ button in the LaTeX sidebar, or press `Ctrl/Cmd`+`Shift`+`P` → “LaTeX Workshop: Build LaTeX project”).
-3. The PDF is written to `build/main.pdf` and opens in a VS Code tab.
+### Option A — VS Code
+1. Open `tex/main.tex` in VS Code.  
+2. Press **Ctrl + Alt + B** (or **Cmd + Alt + B** on macOS) to build the project.  
+3. The compiled PDF will appear in `build/main.pdf`.
 
 ### Option B — Terminal
+You can also use the provided Makefile:
 
 **Linux / macOS**
-
 ```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex
-# Open the PDF:
-# macOS:  open build/main.pdf
-# Linux:  xdg-open build/main.pdf
+make pdf      # build once
+make watch    # auto-rebuild on save
+make clean    # remove build artifacts
 ```
 
-**Windows (PowerShell)**
+---
 
-```powershell
-latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build .\main.tex
-# Open the PDF:
-start .\build\main.pdf
-```
+## LaTeX Installation
 
-**Clean build artifacts (optional)**
-
-* Linux/macOS:
+* **Fedora Linux:**
 
   ```bash
-  latexmk -C -outdir=build
+  sudo dnf install -y texlive-scheme-medium latexmk biber
   ```
-* Windows:
+* **macOS:**
 
-  ```powershell
-  latexmk -C -output-directory=build
+  ```bash
+  brew install --cask basictex
+  sudo tlmgr update --self
+  sudo tlmgr install latexmk biber
   ```
+* **Windows:**
 
-> Note: `latexmk` will automatically run `biber` when needed for the bibliography. If `latexmk` isn’t found, restart your terminal/VS Code and ensure your TeX distribution is on `PATH`.
+  1. Install from [https://miktex.org/download](https://miktex.org/download)
+  2. Enable “install missing packages on-the-fly”.
+  3. Verify:
+
+     ```powershell
+     latexmk -v
+     pdflatex --version
+     ```
 
 ---
 
-## Structure
+## Configure AI API
 
-```
-src/
- ├─ ai/                  # API clients
- └─ scripts/deepseek_chat.py  # CLI entrypoint
-tex/
- └─ main.tex
-.vscode/
-Makefile
-pyproject.toml
-```
+Create `.env` with **either** DeepSeek **or** OpenAI settings.
 
----
-
-## Configure your AI
-
-Create `.env` with **either** DeepSeek **or** OpenAI keys.
-
-### Option A — DeepSeek
+**DeepSeek**
 
 ```
 DEEPSEEK_API_KEY=...
@@ -181,56 +102,55 @@ DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
 DEEPSEEK_MODEL=deepseek-chat
 ```
 
-### Option B — OpenAI (ChatGPT)
+**OpenAI (ChatGPT)**
 
 ```
 OPENAI_API_KEY=...
-# Optional if using the public API:
+# Optional override:
 # OPENAI_BASE_URL=https://api.openai.com/v1
 OPENAI_MODEL=gpt-4o-mini
 ```
 
-> The CLI uses whichever provider you’ve configured in `.env`.
-
----
-
-## How to use your AI
-
-Activate the virtual environment, then run the chat CLI.
-
-### Linux / macOS
-
-```bash
-source .venv/bin/activate
-deepseek-chat "Hello from the lab"
-```
-
-### Windows PowerShell
-
-```powershell
-. .\.venv\Scripts\Activate.ps1
-deepseek-chat "Hello from the lab"
-```
-
-**Model override (optional):**
-
-```bash
-MODEL=gpt-4o-mini deepseek-chat "Summarize today's experiment."
-# or (PowerShell)
-$env:MODEL="gpt-4o-mini"; deepseek-chat "Summarize today's experiment."
-```
+> The CLI uses whichever provider is configured in `.env`.
+> Temporary override:
+> Linux/macOS: `MODEL=gpt-4o-mini deepseek-chat "…”`
+> Windows: `$env:MODEL="gpt-4o-mini"; deepseek-chat "…"`
 
 ---
 
 ## Common Commands
 
-| Purpose       | Linux / macOS               | Windows PowerShell           |
-| ------------- | --------------------------- | ---------------------------- |
-| Activate venv | `source .venv/bin/activate` | `.venv\Scripts\Activate.ps1` |
-| Run chat CLI  | `deepseek-chat "msg"`       | `deepseek-chat "msg"`        |
-| Format code   | `make fmt`                  | `make fmt`                   |
-| Lint code     | `make lint`                 | `make lint`                  |
-| Type check    | `make type`                 | `make type`                  |
-| Build PDF     | `make pdf`                  | `make pdf`                   |
-| Watch LaTeX   | `make watch`                | `make watch`                 |
-| Clean build   | `make clean`                | `make clean`                 |
+| Task          | Linux / macOS               | Windows PowerShell               |
+| ------------- | --------------------------- | -------------------------------- |
+| Activate venv | `source .venv/bin/activate` | `. .\.venv\Scripts\Activate.ps1` |
+| Chat CLI      | `deepseek-chat "message"`   | `deepseek-chat "message"`        |
+| Format        | `make fmt`                  | `make fmt`                       |
+| Lint          | `make lint`                 | `make lint`                      |
+| Type check    | `make type`                 | `make type`                      |
+| Build PDF     | `make pdf`                  | `make pdf`                       |
+| Watch LaTeX   | `make watch`                | `make watch`                     |
+| Clean         | `make clean`                | `make clean`                     |
+
+> `make` must be available on Windows (e.g., Git for Windows, MSYS2). Otherwise use the direct `latexmk`/tooling commands above.
+
+---
+
+## Repo Structure
+
+```
+data/
+src/
+  ai/                       # Provider clients
+  scripts/                  # Your python scripts
+  scripts/deepseek_chat.py  # CLI entrypoint
+tex/
+  sections/                 
+  main.tex
+  references.bib
+.vscode/
+Makefile
+pyproject.toml
+README.md
+```
+
+---

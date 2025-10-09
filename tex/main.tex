@@ -1,96 +1,56 @@
 \documentclass[a4paper,12pt]{article}
 
-% ---------- Encoding & language (pdflatex) ----------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
 \usepackage[english]{babel}
 
-% ---------- Fonts & typography ----------
-\usepackage{lmodern}
-\usepackage{microtype}        % better spacing/kerning
+\usepackage{microtype}
 
-% ---------- Math & symbols ----------
 \usepackage{amsmath,amssymb,mathtools}
-\usepackage{siunitx}          % units & numbers, replaces gensymb
+
+\usepackage{siunitx}
 \sisetup{
   detect-all,
-  per-mode=symbol,            % e.g. m/s
-  separate-uncertainty=true
+  per-mode = symbol,
+  separate-uncertainty = true
 }
 
-% ---------- Figures, tables ----------
 \usepackage{graphicx}
-\usepackage{booktabs}         % nice tables
-\usepackage{float}            % optional: [H] placement when you really need it
+\usepackage{booktabs}
 
-% ---------- Links & references ----------
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,capitalise]{cleveref}
 
-% ---------- Layout ----------
-\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage{setspace}
 \onehalfspacing
 
-% ---------- Bibliography (BibLaTeX + biber) ----------
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
-\addbibresource{references.bib}
-
-% ---------- Title info (placeholders) ----------
-\title{<Project Title>}
-\author{
-  <Author One> \and <Author Two> \and <Author Three>
-}
-\date{\today}
+\addbibresource{tex/references.bib}
+\title{FP Template}
+\author{Javier}
 
 \begin{document}
-
-% ---------- Title page (simple, customizable) ----------
-\begin{titlepage}
-  \centering
-  {\huge\bfseries \thetitle\par}
-  \vspace{1.5cm}
-  {\Large <Course / Lab / Organization>\par}
-  \vspace{1cm}
-  {\large \theauthor\par}
-  \vspace{0.5cm}
-  {\large <emails or IDs here>\par}
-  \vfill
-  {\large <Supervisor / Tutor: Name>\par}
-  \vspace{0.5cm}
-  {\large \thedate\par}
-\end{titlepage}
+\maketitle
 
 \tableofcontents
 \newpage
 
-% ---------- Sections (placeholders) ----------
-\begin{abstract}
-<Brief summary (3–6 sentences).>
-\end{abstract}
+\input{sections/00_zusammenfassung}
+\input{sections/01_einführung}
+\input{sections/02_theorie}
+\input{sections/03_durchführung}
+\input{sections/04_ergebnisse}
+\input{sections/05_diskussion}
+\input{sections/06_schlussfolgerung}
+\input{sections/07_anhang}
 
-\section{Introduction}
-<Context, goals, related work \cite{key-example}.>
-
-\section{Methods}
-<Experimental setup / algorithms / datasets.>
-
-\section{Results}
-<Main quantitative/qualitative results.>
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.7\linewidth]{figures/example.png}
-  \caption{<Descriptive caption.>}
-  \label{fig:example}
-\end{figure}
-
-\section{Discussion}
-<Interpret findings, limitations, implications.>
-
-\section{Conclusion}
-<What you did, what it means, and future work.>
-
-% ---------- References ----------
+\begingroup
+\setstretch{1.0}
 \printbibliography
+\endgroup
 
 \end{document}

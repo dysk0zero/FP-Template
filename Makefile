@@ -12,7 +12,7 @@ watch: check-tex
 	@latexmk -pdf -pvc -interaction=nonstopmode -halt-on-error -output-directory=$(OUTDIR) $(MAIN_TEX)
 
 clean:
-	@latexmk -C -output-directory=$(OUTDIR)
+	@latexmk -C -output-directory=$(OUTDIR) $(MAIN_TEX)
 	@rm -rf $(OUTDIR)
 
 check-tex:
