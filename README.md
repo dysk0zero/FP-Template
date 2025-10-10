@@ -1,6 +1,6 @@
 # FP Template
 
-Template for **Cem & Javi**: LaTeX docs, Python tooling, and an AI chat CLI (DeepSeek or ChatGPT via OpenAI).
+Template for **Cem & Javi**: LaTeX docs and Python tooling for academic papers.
 
 ---
 
@@ -22,22 +22,60 @@ which python
 # → .../yourproject/.venv/bin/python
 ```
 
-### Windows (PowerShell)
+### Windows Setup Guide
 
-```powershell
-# Create venv in project root
+**Choose your terminal** (pick ONE of these options):
+
+#### Option A: PowerShell (Recommended)
+
+1. **Open PowerShell as Administrator** (Right-click → "Run as administrator")
+2. **Enable script execution** (run once):
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+3. **Close admin PowerShell, open regular PowerShell in project folder**
+4. **Create and activate virtual environment**:
+   ```powershell
+   # Create venv
+   python -m venv .venv
+   
+   # Activate it
+   .\.venv\Scripts\Activate.ps1
+   
+   # Verify (should show (.venv) in prompt)
+   python --version
+   ```
+
+#### Option B: Command Prompt (cmd) - If PowerShell fails
+
+```cmd
+REM Create venv
+python -m venv .venv
+
+REM Activate it
+.venv\Scripts\activate.bat
+
+REM Verify (should show (.venv) in prompt)
+python --version
+```
+
+#### Option C: Git Bash - If you have Git for Windows
+
+```bash
+# Create venv
 python -m venv .venv
 
 # Activate it
-. .\.venv\Scripts\Activate.ps1
+source .venv/Scripts/activate
 
-# Verify you're inside the venv
-Get-Command python
-# → ...\yourproject\.venv\Scripts\python.exe
-
-# If activation is blocked, run once in this shell:
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+# Verify
+which python
 ```
+
+**Troubleshooting Windows Issues:**
+- ❌ **"python not found"**: Install Python from [python.org](https://python.org), check "Add to PATH"
+- ❌ **"Execution policy error"**: Use Option A step 2, or try Option B (cmd) instead
+- ❌ **Still having issues**: Use Option C (Git Bash) which works like Linux
 
 > After activation the prompt starts with `(.venv)`. Run `deactivate` to exit.
 
@@ -55,31 +93,53 @@ uv sync
 # 2) Install LaTeX dependencies (Fedora example)
 sudo dnf install -y texlive-scheme-medium latexmk biber texlive-cleveref
 
-# 3) Configure secrets
-cp .env.example .env   # fill with either DeepSeek or OpenAI keys
-
-# 4) Activate & test CLI
+# 3) Activate environment
 source .venv/bin/activate
-deepseek-chat "Sanity check"
+
+# 4) Ready to work!
+# Add your Python scripts to src/scripts/
+# Edit LaTeX content in tex/sections/
 ```
 
-### Windows
+### Windows (Quick Start)
 
+**Prerequisites**: Install Python from [python.org](https://python.org) (check "Add to PATH")
+
+#### Method 1: Using uv (Fast - PowerShell)
 ```powershell
-# 1) Install uv + deps and create venv
+# 1) Install uv package manager
 irm https://astral.sh/uv/install.ps1 | iex
+
+# 2) Create environment and install dependencies
 uv sync
 
-# 2) Install LaTeX dependencies (MiKTeX recommended)
-# Download from https://miktex.org/download and allow it to install missing packages automatically.
-
-# 3) Configure secrets
-Copy-Item .env.example .env   # fill with either DeepSeek or OpenAI keys
-
-# 4) Activate & test CLI
-. .\.venv\Scripts\Activate.ps1
-deepseek-chat "Sanity check"
+# 3) Activate virtual environment
+.\.venv\Scripts\Activate.ps1
 ```
+
+#### Method 2: Traditional Python (If uv fails - any terminal)
+```bash
+# Works in PowerShell, cmd, or Git Bash
+python -m venv .venv
+
+# Activate (choose your terminal):
+.\.venv\Scripts\Activate.ps1    # PowerShell
+# .venv\Scripts\activate.bat     # Command Prompt
+# source .venv/Scripts/activate  # Git Bash
+
+# Install dependencies
+python -m pip install -e .
+```
+
+#### LaTeX Setup for Windows
+1. **Download MiKTeX**: [https://miktex.org/download](https://miktex.org/download)
+2. **Install with default settings**
+3. **✅ Enable**: "Install missing packages on-the-fly"
+4. **Test installation**:
+   ```
+   latexmk -v
+   pdflatex --version
+   ```
 
 ---
 
@@ -116,69 +176,38 @@ deepseek-chat "Sanity check"
      pdflatex --version
      ```
 
----
-
-## Configure AI API
-
-Create `.env` with **either** DeepSeek **or** OpenAI settings.
-
-**DeepSeek**
-
-```
-DEEPSEEK_API_KEY=...
-DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
-DEEPSEEK_MODEL=deepseek-chat
-```
-
-**OpenAI (ChatGPT)**
-
-```
-OPENAI_API_KEY=...
-# Optional override:
-# OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_MODEL=gpt-4o-mini
-```
-
-> The CLI uses whichever provider is configured in `.env`.
-> Temporary override:
-> Linux/macOS: `MODEL=gpt-4o-mini deepseek-chat "…”`
-> Windows: `$env:MODEL="gpt-4o-mini"; deepseek-chat "…"`
 
 ---
 
-## Common Commands
+## Common Development Commands
 
-| Task          | Linux / macOS               | Windows PowerShell               |
+| Task          | Linux / macOS               | Windows                          |
 | ------------- | --------------------------- | -------------------------------- |
 | Activate venv | `source .venv/bin/activate` | `. .\.venv\Scripts\Activate.ps1` |
-| Chat CLI      | `deepseek-chat "message"`   | `deepseek-chat "message"`        |
-| Format        | `make fmt`                  | `make fmt`                       |
-| Lint          | `make lint`                 | `make lint`                      |
-| Type check    | `make type`                 | `make type`                      |
-| Build PDF     | `make pdf`                  | `make pdf`                       |
-| Watch LaTeX   | `make watch`                | `make watch`                     |
-| Clean         | `make clean`                | `make clean`                     |
-
-> `make` must be available on Windows (e.g., Git for Windows, MSYS2). Otherwise use the direct `latexmk`/tooling commands above.
+| Format Python | `python -m black src/`      | `python -m black src/`           |
+| Lint Python   | `python -m ruff check src/` | `python -m ruff check src/`      |
+| Type check    | `python -m mypy src/`       | `python -m mypy src/`            |
+| Build PDF     | `Ctrl+Alt+B` (VS Code)      | `Ctrl+Alt+B` (VS Code)           |
+| Manual PDF    | `latexmk -pdf tex/main.tex` | `latexmk -pdf tex/main.tex`      |
+| Clean builds  | `latexmk -c`                | `latexmk -c`                     |
 
 ---
 
-## Repo Structure
+## Repository Structure
 
 ```
-data/
 src/
-  ai/                       # Provider clients
-  scripts/                  # Your python scripts
-  scripts/deepseek_chat.py  # CLI entrypoint
+  scripts/                  # Your Python data analysis scripts
 tex/
-  sections/                 
-  main.tex
-  references.bib
-.vscode/
-Makefile
-pyproject.toml
+  sections/                 # LaTeX document sections (00-07)
+  main.tex                  # Main LaTeX document
+  references.bib            # Bibliography database
+build/                      # Generated PDFs (git ignored)
+.vscode/                    # VS Code configuration
+.venv/                      # Python virtual environment
+pyproject.toml              # Python project configuration
 README.md
+WARP.md                     # AI assistant guidance
 ```
 
 ---

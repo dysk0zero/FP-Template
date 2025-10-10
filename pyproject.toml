@@ -14,11 +14,11 @@ dependencies = [
     "python-dotenv>=1.1.1",
 ]
 
-[project.scripts]
-deepseek-chat = "scripts.deepseek_chat:main"
+# [project.scripts]
+# Add your CLI entry points here for data analysis scripts
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ai", "src/scripts"]
+packages = ["src/scripts"]
 
 [tool.uv]
 # uv (fast package manager, optional)
