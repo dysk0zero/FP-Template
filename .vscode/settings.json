@@ -50,5 +50,7 @@
     "*.log": true,
     "*.out": true,
     "*.synctex.gz": true
-  }
+  },
+  "cursorpyright.analysis.autoImportCompletions": true,
+  "cursorpyright.analysis.typeCheckingMode": "strict"
 }
