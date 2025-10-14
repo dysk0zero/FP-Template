@@ -8,7 +8,6 @@
 
     // --- LaTeX ---
     "james-yu.latex-workshop",
-    "valentjn.vscode-ltex",
 
     // --- General Formatting ---
     "esbenp.prettier-vscode",
