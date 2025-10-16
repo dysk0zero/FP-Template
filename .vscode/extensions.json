@@ -8,7 +8,6 @@
 
     // --- LaTeX ---
     "james-yu.latex-workshop",
-    "valentjn.vscode-ltex",
 
     // --- General Formatting ---
     "esbenp.prettier-vscode",
@@ -16,7 +15,6 @@
     // --- Configuration / Docs ---
     "tamasfe.even-better-toml",
     "redhat.vscode-yaml",
-    "yzhang.markdown-all-in-one",
-    "continue.continue"
+    "yzhang.markdown-all-in-one"
   ]
 }
